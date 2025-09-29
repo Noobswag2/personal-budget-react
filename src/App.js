@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+import './App.scss';   // 👈 changed from App.scss to App.scss
 
 import {
   BrowserRouter as Router,
@@ -14,7 +14,22 @@ import Footer from './Footer/Footer';
 import AboutPage from './AboutPage/AboutPage';
 import LoginPage from './LoginPage/LoginPage';
 
+import api from "./api/client";   // 👈 import Axios client
+
 function App() {
+  // 👇 Axios test
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await api.get("/budget");
+        console.log("✅ Axios test response:", res.data);
+      } catch (err) {
+        console.error("❌ Axios test error:", err.message);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <Router>
       <Menu/>
@@ -26,7 +41,6 @@ function App() {
           <Route path="/" element={<HomePage/>} />
         </Routes>
       </div>
-      <HomePage/>
       <Footer/>
     </Router>
   );
